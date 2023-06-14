@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  background: linear-gradient(180deg, #33383d 0%, #1c1d20 100%);
+  box-shadow: 4px 4px 70px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100vh;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backgroundImage {
+  position: absolute;
+  width: 960px;
+  height: 1080px;
+  left: 960px;
+}
+
+.logo {
+  height: 66px;
+  width: 484px;
+  margin-left: 238px;
+  margin-top: 36px;
+  position: absolute;
+}
+
+.login {
+  width: 960px;
+  height: 100vh;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 285px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 33px;
+  margin-top: 247px;
+}
+
+.write {
+  width: 379px;
+  height: 60px;
+  left: 285px;
+  background: #26292c;
+  border: 1px solid #ffffff;
+  border-radius: 50px;
+  padding-left: 20px;
+  font-family: "Mulish", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #e0e0e0;
+}
+
+.button {
+  width: 379px;
+  height: 67px;
+  top: 115px;
+  background: linear-gradient(90deg, #ff2d04 0%, #c13216 100%);
+  box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 50px;
+  border: none;
+  font-family: Mulish, sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+}
