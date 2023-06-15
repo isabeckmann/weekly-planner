@@ -1,11 +1,23 @@
 import "./login.css";
-import { useState } from "react";
+import "../../assets/fonts.css";
+import { useState, useContext } from "react";
 import background from "../../assets/background.png";
 import logo from "../../assets/logo.png";
+import { authContext } from "../../contexts/auth";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { logIn } = useContext(authContext);
+
+  function handleLogin(e) {
+    e.preventDefault();
+
+    if (email !== "" && password !== "") {
+      logIn(email, password);
+    }
+  }
 
   return (
     <>
@@ -17,7 +29,7 @@ export default function LogIn() {
           </p>
           <h3 className="login-text">Login</h3>
 
-          <form>
+          <form onSubmit={handleLogin}>
             <div>
               <input
                 className="write"

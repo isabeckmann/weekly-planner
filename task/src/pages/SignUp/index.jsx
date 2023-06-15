@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../assets/fonts.css";
 import background from "../../assets/background.png";
 import logo from "../../assets/logo.png";
 
@@ -11,6 +12,13 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.prevent.default();
+
+    if (fisrtName !== "" && lastName !== "") {
+    }
+  }
 
   return (
     <>
@@ -45,7 +53,7 @@ export default function SignUp() {
           <h1 className="titleS">Welcome,</h1>
           <p className="textS">Please register to continue.</p>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               className="writeS"
               type="text"
