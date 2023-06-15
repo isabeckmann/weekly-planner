@@ -4,6 +4,61 @@
   box-sizing: border-box;
 }
 
+.title,
+.titleS {
+  position: absolute;
+  width: 273px;
+  height: 75px;
+  left: 287px;
+  font-family: "Mulish", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 60px;
+  color: #e0e0e0;
+}
+
+.title {
+  top: 197px;
+}
+
+.titleS {
+  top: 94px;
+}
+
+.text,
+.textS {
+  position: absolute;
+  width: 301px;
+  height: 52px;
+  left: 287px;
+  font-family: "Mulish", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #e0e0e0;
+}
+
+.text {
+  top: 290px;
+}
+
+.textS {
+  top: 175px;
+}
+
+.login-text {
+  position: absolute;
+  width: 77px;
+  height: 38px;
+  left: 287px;
+  top: 477px;
+  font-family: "Mulish", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  color: #e0e0e0;
+}
+
 .content {
   display: flex;
   flex-direction: row;
@@ -34,27 +89,22 @@
 }
 
 .login {
-  width: 960px;
-  height: 100vh;
   display: flex;
   justify-content: left;
   align-items: center;
   margin-left: 285px;
+  margin-top: 333px;
 }
 
-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 33px;
-  margin-top: 247px;
+.form {
+  position: relative;
+  margin-top: 32px;
 }
 
-.write {
+.write,
+.writeS {
   width: 379px;
   height: 60px;
-  left: 285px;
   background: #26292c;
   border: 1px solid #ffffff;
   border-radius: 50px;
@@ -63,14 +113,26 @@ form {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 20px;
   color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.button {
-  width: 379px;
+.write {
+  margin-top: 33px;
+}
+
+.writeS {
+  margin-top: 18px;
+  left: 366px;
+}
+
+.button,
+.buttonRegister {
   height: 67px;
-  top: 115px;
+  margin-top: 115px;
   background: linear-gradient(90deg, #ff2d04 0%, #c13216 100%);
   box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.15);
   border-radius: 50px;
@@ -80,4 +142,48 @@ form {
   font-weight: 500;
   color: #fff;
   text-align: center;
+  cursor: pointer;
+}
+
+.button {
+  width: 379px;
+}
+
+.buttonRegister {
+  width: 471px;
+  margin-left: -90px;
+}
+
+.btn {
+  margin-top: -56px;
+}
+
+.signup {
+  margin-top: 250px;
+  margin-left: 17px;
+}
+
+.text-container {
+  width: 75px;
+  height: 559px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  margin: 285px 0 0 290px;
+}
+
+.text-container div {
+  width: 75px;
+  height: 559px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.text-container p {
+  font-family: "Mulish", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #e0e0e0;
 }

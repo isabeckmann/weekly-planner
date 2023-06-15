@@ -11,22 +11,30 @@ export default function LogIn() {
     <>
       <div className="content">
         <div className="login">
-          <form>
-            <input
-              className="write"
-              type="text"
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+          <h1 className="title">Welcome,</h1>
+          <p className="text">
+            To continue browsing safely, log in to the network.
+          </p>
+          <h3 className="login-text">Login</h3>
 
-            <input
-              className="write"
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <form>
+            <div>
+              <input
+                className="write"
+                type="text"
+                placeholder="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+              <input
+                className="write"
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
             <input className="button" type="submit" value="Log in" />
           </form>
