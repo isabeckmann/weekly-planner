@@ -14,8 +14,6 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { signUp } = useContext(authContext);
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -23,12 +21,7 @@ export default function SignUp() {
       firstName === "" ||
       lastName === "" ||
       birthdate === "" ||
-      country === ""
-    ) {
-      alert("Preencha todos os campos");
-    }
-
-    if (
+      country === "" ||
       city === "" ||
       email === "" ||
       password === "" ||
@@ -36,6 +29,16 @@ export default function SignUp() {
     ) {
       alert("Preencha todos os campos");
     }
+
+    //verificação de idade
+    let dateString = document.getElementById("date").value;
+    let birthday = new Date(dateString);
+    let age = Math.floor((Date.now() - birthday) / 31557600000);
+    if (age < 18) {
+      alert("Idade mínima para criar conta: 18 anos.");
+    }
+
+    //comparação de senhas
 
     if (password !== confirmPassword) {
       alert("Senhas diferentes");
@@ -45,107 +48,116 @@ export default function SignUp() {
   return (
     <>
       <div className="content">
-        <div className="text-container">
-          <div>
-            <p>first name</p>
-          </div>
-          <div>
-            <p>last name</p>
-          </div>
-          <div>
-            <p>birth date</p>
-          </div>
-          <div>
-            <p>country</p>
-          </div>
-          <div>
-            <p>city</p>
-          </div>
-          <div>
-            <p>e-mail</p>
-          </div>
-          <div>
-            <p>password</p>
-          </div>
-          <div>
-            <p>password</p>
-          </div>
-        </div>
         <div className="signup">
           <h1 className="titleS">Welcome,</h1>
           <p className="textS">Please register to continue.</p>
 
-          <form onSubmit={handleSubmit}>
-            <input
-              className="writeS"
-              type="text"
-              placeholder="Your first name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-
-            <input
-              className="writeS"
-              type="text"
-              placeholder="Your last name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-
-            <input
-              className="writeS"
-              type="date"
-              placeholder="MM/DD/YYYY"
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-            />
-
-            <input
-              className="writeS"
-              type="text"
-              placeholder="Your country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            />
-            <input
-              className="writeS"
-              type="text"
-              placeholder="Your city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-
-            <input
-              className="writeS"
-              type="text"
-              placeholder="Your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <input
-              className="writeS"
-              type="password"
-              placeholder="Your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <input
-              className="writeS"
-              type="password"
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-
-            <div className="btn">
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="inputLabel">
+              <label htmlFor="firstName">first name</label>
               <input
-                className="buttonRegister"
-                type="submit"
-                value="Register Now"
+                id="firstName"
+                className="writeS"
+                type="text"
+                placeholder="Your first name"
+                value={firstName.replace(/\b\w/g, (match) =>
+                  match.toUpperCase()
+                )}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
+
+            <div className="inputLabel">
+              <label htmlFor="lastName">last name</label>
+              <input
+                id="lastName"
+                className="writeS"
+                type="text"
+                placeholder="Your last name"
+                value={lastName.replace(/\b\w/g, (match) =>
+                  match.toUpperCase()
+                )}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+
+            <div className="inputLabel">
+              <label htmlFor="date">birth date</label>
+              <input
+                className="writeS"
+                type="date"
+                placeholder="MM/DD/YYYY"
+                value={birthdate}
+                id="date"
+                onChange={(e) => setBirthdate(e.target.value)}
+              />
+            </div>
+
+            <div className="inputLabel">
+              <label htmlFor="country">country</label>
+              <input
+                id="country"
+                className="writeS"
+                type="text"
+                placeholder="Your country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              />
+            </div>
+
+            <div className="inputLabel">
+              <label htmlFor="city">city</label>
+              <input
+                id="city"
+                className="writeS"
+                type="text"
+                placeholder="Your city"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </div>
+
+            <div className="inputLabel">
+              <label htmlFor="email">e-mail</label>
+              <input
+                id="email"
+                className="writeS"
+                type="text"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="inputLabel">
+              <label htmlFor="password">password</label>
+              <input
+                id="password"
+                className="writeS"
+                type="password"
+                placeholder="Your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="inputLabel">
+              <label htmlFor="confirmPassword">password</label>
+              <input
+                id="confirmPassword"
+                className="writeS"
+                type="password"
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+
+            <input
+              className="buttonRegister"
+              type="submit"
+              value="Register Now"
+            />
           </form>
         </div>
 

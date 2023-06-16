@@ -98,7 +98,48 @@
 
 .form {
   position: relative;
-  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 800px;
+  margin-top: -76px;
+}
+
+.form div.inputLabel {
+  width: 471px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form div.inputLabel label {
+  margin-bottom: -15px;
+  font-family: "Mulish", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #e0e0e0;
+}
+
+.formLogin {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 380px;
+  width: 369px;
+}
+
+.imgContainer {
+  margin-left: 18px;
+  margin-top: -140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 70px;
 }
 
 .write,
@@ -113,10 +154,6 @@
   font-weight: 400;
   font-size: 16px;
   color: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 .write {
@@ -148,35 +185,17 @@
   width: 379px;
 }
 
-.buttonRegister {
+form input.buttonRegister {
+  margin-top: 56px;
   width: 471px;
-  margin-left: -90px;
-}
-
-.btn {
-  margin-top: -56px;
 }
 
 .signup {
   margin-top: 250px;
-  margin-left: 17px;
-}
-
-.text-container {
-  width: 75px;
-  height: 559px;
+  width: 50vw;
   display: flex;
-  flex-direction: column;
-  gap: 58px;
-  margin: 285px 0 0 290px;
-}
-
-.text-container div {
-  width: 75px;
-  height: 559px;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
+  justify-content: center;
+  align-items: center;
 }
 
 .text-container p {

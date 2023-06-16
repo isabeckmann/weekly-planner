@@ -3,6 +3,8 @@ import "../../assets/fonts.css";
 import { useState, useContext } from "react";
 import background from "../../assets/background.png";
 import logo from "../../assets/logo.png";
+import user from "../../assets/user.svg";
+import passwordImg from "../../assets/password.svg";
 import { authContext } from "../../contexts/auth";
 
 export default function LogIn() {
@@ -31,7 +33,7 @@ export default function LogIn() {
           </p>
           <h3 className="login-text">Login</h3>
 
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="formLogin">
             <div>
               <input
                 className="write"
@@ -52,6 +54,11 @@ export default function LogIn() {
 
             <input className="button" type="submit" value="Log in" />
           </form>
+
+          <div className="imgContainer">
+            <img src={user} />
+            <img src={passwordImg} />
+          </div>
         </div>
 
         <div className="container">
