@@ -1,9 +1,15 @@
 import { useState, createContext, useEffect } from "react";
+import { db, auth } from "../services/firebaseConnection";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const authContext = createContext({});
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   //para logar usuário já criado
   function logIn(email, password) {
@@ -11,7 +17,7 @@ function AuthProvider({ children }) {
   }
 
   // para cadastrar um novo usuário
-  function signUp(
+  async function signUp(
     firstName,
     lastName,
     birthdate,
@@ -20,7 +26,51 @@ function AuthProvider({ children }) {
     email,
     password,
     confirmPassword
-  ) {}
+  ) {
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+      firstName,
+      lastName,
+      birthdate,
+      country,
+      city,
+      confirmPassword
+    ).then(async (value) => {
+      let uid = value.user.uid;
+
+      await setDoc(doc(db, "users", uid), {
+        nome: firstName,
+        sobrenome: lastName,
+        aniversario: birthdate,
+        pais: country,
+        cidade: city,
+        email: email,
+        senha: password,
+        confirmarSenha: confirmPassword,
+      }).then(() => {
+        let data = {
+          uid: uid,
+          nome: firstName,
+          sobrenome: lastName,
+          aniversario: value.user.birthdate,
+          pais: value.user.country,
+          cidade: value.user.city,
+          email: value.user.email,
+        };
+
+        setUser(data);
+        storageUser(data);
+        toast.success("Cadastrado com sucesso!");
+        navigate("/planner");
+      });
+    });
+  }
+
+  function storageUser(data) {
+    localStorage.setItem("@weeklyData", JSON.stringify(data));
+  }
 
   return (
     <authContext.Provider

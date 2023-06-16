@@ -14,6 +14,8 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const { signUp } = useContext(authContext);
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -43,6 +45,16 @@ export default function SignUp() {
     if (password !== confirmPassword) {
       alert("Senhas diferentes");
     }
+    signUp(
+      firstName,
+      lastName,
+      birthdate,
+      country,
+      city,
+      email,
+      password,
+      confirmPassword
+    );
   }
 
   return (
