@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "../../assets/fonts.css";
 import background from "../../assets/background.png";
 import logo from "../../assets/logo.png";
+import { authContext } from "../../contexts/auth";
 
 export default function SignUp() {
-  const [fisrtName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [country, setCountry] = useState("");
@@ -13,10 +14,31 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  function handleSubmit(e) {
-    e.prevent.default();
+  const { signUp } = useContext(authContext);
 
-    if (fisrtName !== "" && lastName !== "") {
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      birthdate === "" ||
+      country === ""
+    ) {
+      alert("Preencha todos os campos");
+    }
+
+    if (
+      city === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      alert("Preencha todos os campos");
+    }
+
+    if (password !== confirmPassword) {
+      alert("Senhas diferentes");
     }
   }
 
@@ -58,7 +80,7 @@ export default function SignUp() {
               className="writeS"
               type="text"
               placeholder="Your first name"
-              value={fisrtName}
+              value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
 
@@ -72,7 +94,7 @@ export default function SignUp() {
 
             <input
               className="writeS"
-              type="text"
+              type="date"
               placeholder="MM/DD/YYYY"
               value={birthdate}
               onChange={(e) => setBirthdate(e.target.value)}

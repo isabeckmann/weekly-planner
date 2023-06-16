@@ -16,6 +16,8 @@ export default function LogIn() {
 
     if (email !== "" && password !== "") {
       logIn(email, password);
+    } else {
+      alert("Preencha todos os campos");
     }
   }
 
