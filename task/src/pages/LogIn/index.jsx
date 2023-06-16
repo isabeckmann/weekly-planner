@@ -13,13 +13,16 @@ export default function LogIn() {
 
   const { logIn } = useContext(authContext);
 
+  const [error, setError] = useState(false);
+
   function handleLogin(e) {
     e.preventDefault();
 
     if (email !== "" && password !== "") {
       logIn(email, password);
+      setError(false);
     } else {
-      alert("Preencha todos os campos");
+      setError(true);
     }
   }
 
@@ -36,7 +39,7 @@ export default function LogIn() {
           <form onSubmit={handleLogin} className="formLogin">
             <div>
               <input
-                className="write"
+                className={error ? "write erro" : "write"}
                 type="text"
                 placeholder="email"
                 value={email}
@@ -44,7 +47,7 @@ export default function LogIn() {
               />
 
               <input
-                className="write"
+                className={error ? "write erro" : "write"}
                 type="password"
                 placeholder="password"
                 value={password}

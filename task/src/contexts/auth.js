@@ -1,6 +1,10 @@
 import { useState, createContext, useEffect } from "react";
 import { db, auth } from "../services/firebaseConnection";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,9 +16,42 @@ function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   //para logar usuário já criado
-  function logIn(email, password) {
-    alert("logado");
+  async function logIn(email, password) {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(async (value) => {
+        let uid = value.user.uid;
+
+        const docRef = doc(db, "users", uid);
+        const docSnap = await getDoc(docRef);
+
+        let data = {
+          uid: uid,
+          nome: docSnap.data().nome,
+          email: value.user.email,
+        };
+
+        setUser(data);
+        storageUser(data);
+        navigate("/planner");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Algo deu errado");
+      });
   }
+
+  //ir para o dashboard apenas se estiver logado
+  useEffect(() => {
+    async function loadUser() {
+      const storageUser = localStorage.getItem("@weeklyData");
+
+      if (storageUser) {
+        setUser(JSON.parse(storageUser));
+      }
+    }
+
+    loadUser();
+  }, []);
 
   // para cadastrar um novo usuário
   async function signUp(
@@ -49,27 +86,37 @@ function AuthProvider({ children }) {
         email: email,
         senha: password,
         confirmarSenha: confirmPassword,
-      }).then(() => {
-        let data = {
-          uid: uid,
-          nome: firstName,
-          sobrenome: lastName,
-          aniversario: value.user.birthdate,
-          pais: value.user.country,
-          cidade: value.user.city,
-          email: value.user.email,
-        };
+      })
+        .then(() => {
+          let data = {
+            uid: uid,
+            nome: firstName,
+            sobrenome: lastName,
+            aniversario: value.user.birthdate,
+            pais: value.user.country,
+            cidade: value.user.city,
+            email: value.user.email,
+          };
 
-        setUser(data);
-        storageUser(data);
-        toast.success("Cadastrado com sucesso!");
-        navigate("/planner");
-      });
+          setUser(data);
+          storageUser(data);
+          toast.success("Cadastrado com sucesso!");
+          navigate("/planner");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
   }
 
   function storageUser(data) {
     localStorage.setItem("@weeklyData", JSON.stringify(data));
+  }
+
+  async function logOut() {
+    await signOut();
+    localStorage.removeItem("@weeklyData");
+    setUser(null);
   }
 
   return (
@@ -79,6 +126,7 @@ function AuthProvider({ children }) {
         user,
         logIn,
         signUp,
+        logOut,
       }}
     >
       {children}
