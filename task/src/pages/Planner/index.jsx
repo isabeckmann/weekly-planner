@@ -1,11 +1,17 @@
 import { authContext } from "../../contexts/auth";
 import { useContext } from "react";
+import "./planner.css";
+import Header from "../../components/Header";
+import Symbol from "../../assets/Group.png";
 
 export default function Planner() {
   const { logOut } = useContext(authContext);
   return (
-    <div>
-      <h1>Planner</h1>
-    </div>
+    <>
+      <Header />
+      <div>
+        <img className="imgUol" src={Symbol} />
+      </div>
+    </>
   );
 }
