@@ -113,8 +113,9 @@ function AuthProvider({ children }) {
     localStorage.setItem("@weeklyData", JSON.stringify(data));
   }
 
+  //par sair da conta
   async function logOut() {
-    await signOut();
+    await signOut(auth);
     localStorage.removeItem("@weeklyData");
     setUser(null);
   }
