@@ -1,11 +1,35 @@
 import "./header.css";
-import logo from "../../assets/logoWhite.svg";
+import logoHeader from "../../assets/logoWhite.svg";
 import logout from "../../assets/Vector.svg";
 import "../../assets/fonts.css";
 import { authContext } from "../../contexts/auth";
 import { useContext } from "react";
 
 export default function Header() {
+  //relogio
+  let relogio = document.querySelector("#relogio");
+  let h = document.querySelector("#h");
+  let m = document.querySelector("#m");
+
+  function relogioFuncional() {
+    let atual = new Date();
+
+    let hora = atual.getHours();
+    let min = atual.getMinutes();
+
+    let stringHora = new String(hora);
+    let stringMin = new String(min);
+
+    if (stringMin.length == 1) min = "0" + min;
+    if (stringHora.length == 1) hora = "0" + hora;
+
+    h.textContent = hora;
+    m.textContent = min;
+
+    setTimeout("relogioFuncional()", 1000);
+  }
+
+  //logout
   const { logOut } = useContext(authContext);
 
   async function handleLogOut() {
@@ -21,8 +45,12 @@ export default function Header() {
         </div>
       </div>
 
+      <div id="relogio">
+        <span id="h"></span>:<span id="m"></span>
+      </div>
+
       <a href="https://compass.uol/en/home/">
-        <img className="logo" src={logo} />
+        <img className="logoHeader" src={logoHeader} />
       </a>
 
       <div className="logout" onClick={handleLogOut}>
