@@ -21,9 +21,9 @@ export default function Header() {
         </div>
       </div>
 
-      <div>
+      <a href="https://compass.uol/en/home/">
         <img className="logo" src={logo} />
-      </div>
+      </a>
 
       <div className="logout" onClick={handleLogOut}>
         <img src={logout} />
