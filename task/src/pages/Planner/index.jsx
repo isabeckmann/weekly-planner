@@ -2,25 +2,32 @@ import "./planner.css";
 import "../../assets/fonts.css";
 import Header from "../../components/Header";
 import Symbol from "../../assets/Group.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, db } from "../../services/firebaseConnection";
 import { addDoc, collection } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 export default function Planner() {
   const [textoInput, setTextoInput] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
-  const [sunday, setSunday] = useState("");
-  const [monday, setMonday] = useState("");
-  const [tuesday, setTuesday] = useState("");
-  const [wednesday, setWednesday] = useState("");
-  const [thursday, setThursday] = useState("");
-  const [friday, setFriday] = useState("");
-  const [saturday, setSaturday] = useState("");
-  const [user, setUser] = useState("");
+  const [sunday, setSunday] = useState("sunday");
+  const [monday, setMonday] = useState("monday");
+  const [tuesday, setTuesday] = useState("tuesday");
+  const [wednesday, setWednesday] = useState("wednesday");
+  const [thursday, setThursday] = useState("thursday");
+  const [friday, setFriday] = useState("friday");
+  const [saturday, setSaturday] = useState("saturday");
+  const [user, setUser] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const user = localStorage.getItem("@weeklyData");
+
+    if (user) {
+      setUser(JSON.parse(user));
+    }
 
     if (textoInput === "") {
       return;
@@ -30,7 +37,13 @@ export default function Planner() {
       tarefa: textoInput,
       dia: diaSemana,
       hora: selectedHour,
+      usuario: user,
     });
+
+    setTextoInput("");
+    setDiaSemana("");
+    setSelectedHour("");
+    toast.success("Tarefa registrada!");
   }
 
   return (
