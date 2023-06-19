@@ -8,6 +8,7 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Modal from "../components/Modal";
 
 export const authContext = createContext({});
 
@@ -36,7 +37,7 @@ function AuthProvider({ children }) {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Algo deu errado");
+        <Modal />;
       });
   }
 
