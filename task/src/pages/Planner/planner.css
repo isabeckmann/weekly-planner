@@ -13,7 +13,7 @@
   float: right;
   gap: 24px;
   margin-right: 23px;
-  margin-top: -42px;
+  margin-top: 0px;
 }
 
 button {
@@ -35,12 +35,16 @@ button {
   background-color: #ff3d1f;
 }
 
-.selecionar {
-  height: 45px;
-  width: 757px;
+form {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+}
+
+.selecionar {
+  height: 45px;
+  width: 100%;
   margin-top: 35px;
 }
 
@@ -64,7 +68,7 @@ select {
 
 .horario {
   width: 120px;
-  margin-left: 3px;
+  margin-left: -677px;
 }
 
 .textarea {

@@ -2,24 +2,68 @@ import "./planner.css";
 import "../../assets/fonts.css";
 import Header from "../../components/Header";
 import Symbol from "../../assets/Group.png";
+import { useState } from "react";
+import { auth, db } from "../../services/firebaseConnection";
+import { addDoc, collection } from "firebase/firestore";
 
 export default function Planner() {
+  const [textoInput, setTextoInput] = useState("");
+  const [diaSemana, setDiaSemana] = useState("");
+  const [selectedHour, setSelectedHour] = useState("");
+  const [sunday, setSunday] = useState("");
+  const [monday, setMonday] = useState("");
+  const [tuesday, setTuesday] = useState("");
+  const [wednesday, setWednesday] = useState("");
+  const [thursday, setThursday] = useState("");
+  const [friday, setFriday] = useState("");
+  const [saturday, setSaturday] = useState("");
+  const [user, setUser] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (textoInput === "") {
+      return;
+    }
+
+    await addDoc(collection(db, "tarefas"), {
+      tarefa: textoInput,
+      dia: diaSemana,
+      hora: selectedHour,
+    });
+  }
+
   return (
     <>
       <Header />
 
-      <div className="selecionar">
-        <textarea className="textarea">Task or issue</textarea>
-        <select className="dias">
-          <option>Sunday</option>
-          <option>Monday</option>
-          <option>Tuesday</option>
-          <option>Wednesday</option>
-          <option>Thursday</option>
-          <option>Friday</option>
-          <option>Saturday</option>
+      <form className="selecionar" onSubmit={handleSubmit}>
+        <textarea
+          placeholder="Task or issue"
+          className="textarea"
+          value={textoInput}
+          onChange={(e) => setTextoInput(e.target.value)}
+        />
+
+        <select
+          className="dias"
+          value={diaSemana}
+          onChange={(e) => setDiaSemana(e.target.value)}
+        >
+          <option value={sunday}>Sunday</option>
+          <option value={monday}>Monday</option>
+          <option value={tuesday}>Tuesday</option>
+          <option value={wednesday}>Wednesday</option>
+          <option value={thursday}>Thursday</option>
+          <option value={friday}>Friday</option>
+          <option value={saturday}>Saturday</option>
         </select>
-        <select className="horario">
+
+        <select
+          className="horario"
+          value={selectedHour}
+          onChange={(e) => setSelectedHour(e.target.value)}
+        >
           <option>00h 00m</option>
           <option>00h 30m</option>
           <option>01h 00m</option>
@@ -69,12 +113,14 @@ export default function Planner() {
           <option>23h 00m</option>
           <option>23h 30m</option>
         </select>
-      </div>
 
-      <div className="AddDelete">
-        <button className="add">+ Add to calendar</button>
-        <button className="delete">— Delete All</button>
-      </div>
+        <div className="AddDelete">
+          <button className="add" type="submit">
+            + Add to calendar
+          </button>
+          <button className="delete">— Delete All</button>
+        </div>
+      </form>
 
       <div className="semana">
         <label className="monday">Monday</label>
