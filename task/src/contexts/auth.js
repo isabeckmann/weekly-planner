@@ -14,6 +14,7 @@ export const authContext = createContext({});
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [erro, setErro] = useState("");
   const navigate = useNavigate();
 
   //para logar usuário já criado
@@ -36,6 +37,10 @@ function AuthProvider({ children }) {
         navigate("/planner");
       })
       .catch((error) => {
+        if (error.code === "auth/user-not-found") {
+          setErro(true);
+          console.log("Email não encontrado");
+        }
         console.log(error);
       });
   }
@@ -129,6 +134,7 @@ function AuthProvider({ children }) {
         logIn,
         signUp,
         logOut,
+        erro: erro,
       }}
     >
       {children}

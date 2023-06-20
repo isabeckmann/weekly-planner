@@ -48,7 +48,8 @@ export default function Header() {
       </div>
 
       <div id="relogio" onLoad={relogioFuncional} className="relogio">
-        <span id="h">{h}</span>:<span id="m">{m}</span>
+        <span id="h">{h}</span>
+        <span id="m">{m}</span>
       </div>
 
       <a href="https://compass.uol/en/home/">

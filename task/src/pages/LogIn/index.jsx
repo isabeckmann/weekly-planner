@@ -6,12 +6,14 @@ import logo from "../../assets/logo.png";
 import user from "../../assets/user.svg";
 import passwordImg from "../../assets/password.svg";
 import { authContext } from "../../contexts/auth";
+import Modal from "../../components/Modal";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { logIn } = useContext(authContext);
+  const { logIn, erro } = useContext(authContext);
   const [error, setError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function handleLogin(e) {
     e.preventDefault();
@@ -21,12 +23,17 @@ export default function LogIn() {
       setError(false);
     } else {
       setError(true);
+      setIsModalOpen(true);
+    }
+
+    if (erro) {
     }
   }
 
   return (
     <>
       <div className="content">
+        <Modal isOpen={isModalOpen} />
         <div className="login">
           <h1 className="title">Welcome,</h1>
           <p className="text">
@@ -53,6 +60,11 @@ export default function LogIn() {
               />
             </div>
 
+            {error === "Invalid" && (
+              <span className="invalidSpan">
+                Wow, invalid username or password. Please, try again!
+              </span>
+            )}
             <input className="button" type="submit" value="Log in" />
           </form>
 

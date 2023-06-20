@@ -7,6 +7,8 @@ import { auth, db } from "../../services/firebaseConnection";
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   orderBy,
   query,
@@ -18,7 +20,7 @@ export default function Planner() {
   const [textoInput, setTextoInput] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState("monday");
   const [tasks, setTasks] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -76,7 +78,9 @@ export default function Planner() {
           id: doc.id,
         });
       });
+
       setTasks(list);
+
       setLoading(false);
       //console.log("effect", tasks);
     });
@@ -114,6 +118,17 @@ export default function Planner() {
     return style;
   }
 
+  //deletar tarefa
+  async function handleDeleteTask(id) {
+    const docRef = doc(db, "tarefas", id);
+    try {
+      await deleteDoc(docRef);
+      toast.success("Tarefa deletada");
+    } catch (error) {
+      toast.warn("Erro ao deletar tarefa");
+    }
+  }
+
   return (
     <>
       <Header />
@@ -131,6 +146,7 @@ export default function Planner() {
           value={diaSemana}
           onChange={(e) => setDiaSemana(e.target.value)}
         >
+          <option value="">Choose a day</option>
           <option value="sunday">Sunday</option>
           <option value="monday">Monday</option>
           <option value="tuesday">Tuesday</option>
@@ -145,6 +161,7 @@ export default function Planner() {
           value={selectedHour}
           onChange={(e) => setSelectedHour(e.target.value)}
         >
+          <option>Set time</option>
           <option>00h 00m</option>
           <option>00h 30m</option>
           <option>01h 00m</option>
@@ -279,15 +296,22 @@ export default function Planner() {
           <div>
             {tasks.map((atual) => {
               const estilo = handleColor(date);
+
               return (
                 <div className="caixinha" key={atual.id}>
                   <div className="tarefaTime" style={estilo}>
                     {atual.hora}
                   </div>
+
                   <div className="tarefaContent">
                     <span>{atual.tarefa}</span>
                     <div className="borda" style={estilo}></div>
-                    <button className="deleteTarefa">Delete</button>
+                    <button
+                      className="deleteTarefa"
+                      onClick={() => handleDeleteTask(atual.id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               );
