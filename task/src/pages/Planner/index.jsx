@@ -4,46 +4,114 @@ import Header from "../../components/Header";
 import Symbol from "../../assets/Group.png";
 import { useState, useEffect } from "react";
 import { auth, db } from "../../services/firebaseConnection";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 
 export default function Planner() {
   const [textoInput, setTextoInput] = useState("");
   const [diaSemana, setDiaSemana] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
-  const [sunday, setSunday] = useState("sunday");
-  const [monday, setMonday] = useState("monday");
-  const [tuesday, setTuesday] = useState("tuesday");
-  const [wednesday, setWednesday] = useState("wednesday");
-  const [thursday, setThursday] = useState("thursday");
-  const [friday, setFriday] = useState("friday");
-  const [saturday, setSaturday] = useState("saturday");
-  const [user, setUser] = useState(null);
+  const [date, setDate] = useState("");
+  const [tasks, setTasks] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  function handleDias(dia) {
+    setDate(dia);
+    console.log("aba clicada" + dia);
+  }
+
+  const user = localStorage.getItem("@weeklyData");
+
+  const userInfo = JSON.parse(user);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const user = localStorage.getItem("@weeklyData");
-
-    if (user) {
-      setUser(JSON.parse(user));
-    }
-
     if (textoInput === "") {
       return;
     }
-
+    //console.log("aaaaaaa" + diaSemana);
     await addDoc(collection(db, "tarefas"), {
       tarefa: textoInput,
       dia: diaSemana,
       hora: selectedHour,
-      usuario: user,
+      usuario: userInfo.email,
     });
 
     setTextoInput("");
     setDiaSemana("");
     setSelectedHour("");
     toast.success("Tarefa registrada!");
+  }
+
+  const myCollection = collection(db, "tarefas");
+
+  useEffect(() => {
+    //console.log(date);
+
+    setLoading(true);
+
+    const q = query(
+      myCollection,
+      orderBy("hora"),
+      where("usuario", "==", `${userInfo.email}`),
+      where("dia", "==", `${date}`)
+    );
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      let list = [];
+      snapshot.forEach((doc) => {
+        list.push({
+          tarefa: doc.data().tarefa,
+          dia: doc.data().dia,
+          hora: doc.data().hora,
+          usuario: doc.data().usuario,
+          id: doc.id,
+        });
+      });
+      setTasks(list);
+      setLoading(false);
+      //console.log("effect", tasks);
+    });
+  }, [date]);
+
+  //mudar de cor
+  function handleColor(day) {
+    let style = {};
+
+    switch (day) {
+      case "sunday":
+        style.backgroundColor = "rgba(255, 0, 36, 0.5)";
+        break;
+      case "monday":
+        style.backgroundColor = "#ff0024";
+        break;
+      case "tuesday":
+        style.backgroundColor = "#ff8000";
+        break;
+      case "wednesday":
+        style.backgroundColor = "#ffce00";
+        break;
+      case "thursday":
+        style.backgroundColor = "rgba(255, 0, 36, 0.7)";
+        break;
+      case "friday":
+        style.backgroundColor = "rgba(255, 128, 0, 0.7)";
+        break;
+      case "saturday":
+        style.backgroundColor = "rgba(255, 206, 0, 0.7)";
+        break;
+      default:
+        style.backgroundColor = "gray";
+    }
+    return style;
   }
 
   return (
@@ -63,13 +131,13 @@ export default function Planner() {
           value={diaSemana}
           onChange={(e) => setDiaSemana(e.target.value)}
         >
-          <option value={sunday}>Sunday</option>
-          <option value={monday}>Monday</option>
-          <option value={tuesday}>Tuesday</option>
-          <option value={wednesday}>Wednesday</option>
-          <option value={thursday}>Thursday</option>
-          <option value={friday}>Friday</option>
-          <option value={saturday}>Saturday</option>
+          <option value="sunday">Sunday</option>
+          <option value="monday">Monday</option>
+          <option value="tuesday">Tuesday</option>
+          <option value="wednesday">Wednesday</option>
+          <option value="thursday">Thursday</option>
+          <option value="friday">Friday</option>
+          <option value="saturday">Saturday</option>
         </select>
 
         <select
@@ -136,16 +204,97 @@ export default function Planner() {
       </form>
 
       <div className="semana">
-        <label className="monday">Monday</label>
-        <label className="tuesday">Tuesday</label>
-        <label className="wednesday">Wednesday</label>
-        <label className="thursday">Thursday</label>
-        <label className="friday">Friday</label>
-        <label className="saturday">Saturday</label>
-        <label className="sunday">Sunday</label>
+        <button
+          className="monday"
+          onClick={() => {
+            handleDias("monday");
+            handleColor(date);
+          }}
+        >
+          Monday
+        </button>
+        <button
+          className="tuesday"
+          onClick={() => {
+            handleDias("tuesday");
+            handleColor(date);
+          }}
+        >
+          Tuesday
+        </button>
+        <button
+          className="wednesday"
+          onClick={() => {
+            handleDias("wednesday");
+            handleColor(date);
+          }}
+        >
+          Wednesday
+        </button>
+        <button
+          className="thursday"
+          onClick={() => {
+            handleDias("thursday");
+            handleColor(date);
+          }}
+        >
+          Thursday
+        </button>
+        <button
+          className="friday"
+          onClick={() => {
+            handleDias("friday");
+            handleColor(date);
+          }}
+        >
+          Friday
+        </button>
+        <button
+          className="saturday"
+          onClick={() => {
+            handleDias("saturday");
+            handleColor(date);
+          }}
+        >
+          Saturday
+        </button>
+        <button
+          className="sunday"
+          onClick={() => {
+            handleDias("sunday");
+            handleColor(date);
+          }}
+        >
+          Sunday
+        </button>
       </div>
 
-      <div className="timeBox">Time</div>
+      <div className="timeBox" onClick={() => console.log(tasks)}>
+        Time
+      </div>
+
+      <div className="containerTarefa">
+        {loading && <span>Carregando...</span>}
+        {!loading && (
+          <div>
+            {tasks.map((atual) => {
+              const estilo = handleColor(date);
+              return (
+                <div className="caixinha" key={atual.id}>
+                  <div className="tarefaTime" style={estilo}>
+                    {atual.hora}
+                  </div>
+                  <div className="tarefaContent">
+                    <span>{atual.tarefa}</span>
+                    <div className="borda" style={estilo}></div>
+                    <button className="deleteTarefa">Delete</button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       <div>
         <img className="imgUol" src={Symbol} />

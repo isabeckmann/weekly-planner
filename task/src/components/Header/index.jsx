@@ -3,13 +3,12 @@ import logoHeader from "../../assets/logoWhite.svg";
 import logout from "../../assets/Vector.svg";
 import "../../assets/fonts.css";
 import { authContext } from "../../contexts/auth";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function Header() {
   //relogio
-  let relogio = document.querySelector("#relogio");
-  let h = document.querySelector("#h");
-  let m = document.querySelector("#m");
+  const [h, setH] = useState("");
+  const [m, setM] = useState("");
 
   function relogioFuncional() {
     let atual = new Date();
@@ -23,10 +22,13 @@ export default function Header() {
     if (stringMin.length == 1) min = "0" + min;
     if (stringHora.length == 1) hora = "0" + hora;
 
-    h.textContent = hora;
-    m.textContent = min;
+    //h.textContent = hora;
+    //m.textContent = min;
 
-    setTimeout("relogioFuncional()", 1000);
+    setH(hora);
+    setM(min);
+
+    setTimeout(relogioFuncional(), 1000);
   }
 
   //logout
@@ -45,8 +47,8 @@ export default function Header() {
         </div>
       </div>
 
-      <div id="relogio">
-        <span id="h"></span>:<span id="m"></span>
+      <div id="relogio" onLoad={relogioFuncional} className="relogio">
+        <span id="h">{h}</span>:<span id="m">{m}</span>
       </div>
 
       <a href="https://compass.uol/en/home/">

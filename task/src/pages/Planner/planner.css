@@ -16,7 +16,7 @@
   margin-top: 0px;
 }
 
-button {
+.AddDelete button {
   width: 200px;
   border-radius: 10px;
   border: none;
@@ -100,18 +100,20 @@ select {
   margin-top: 22px;
 }
 
-label {
+.semana button {
   width: 240px;
   height: 33px;
-  left: 125px;
-  top: 232px;
   box-shadow: 0px 4px 24px rgba(168, 168, 168, 0.25);
   border-radius: 9px 9px 0px 0px;
+  border: none;
   font-family: "Mulish";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
-  padding: 2px 0 0 9px;
+  display: flex;
+  align-items: center;
+  padding-left: 7px;
+  color: rgba(0, 0, 0, 0.9);
 }
 
 .monday {
@@ -158,7 +160,92 @@ label {
   margin-left: 24px;
 }
 
+.containerTarefa {
+  width: 1850px;
+  height: 730px;
+  overflow: auto;
+  margin-left: 24px;
+  margin-top: 90px;
+  display: flex;
+  flex-direction: column;
+}
+
+.caixinha {
+  width: 614px;
+  height: 85px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.tarefaTime {
+  width: 85px;
+  height: 85px;
+  background: #ff0024;
+  border-bottom: 1px solid #dcdfe3;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.tarefaContent {
+  width: 512px;
+  height: 85px;
+  background: linear-gradient(
+    112.83deg,
+    rgba(228, 240, 248, 0.42) 0%,
+    rgba(255, 255, 255, 0.336) 110.84%
+  );
+  border: 1px solid #ffffff;
+  box-shadow: 8px 8px 5.5px rgba(0, 0, 0, 0.03);
+  display: flex;
+  align-items: center;
+  padding-left: 28px;
+  z-index: 500;
+  position: relative;
+}
+
+.borda {
+  width: 14px;
+  height: 85px;
+  background: #ff0024;
+  border-radius: 15px 0px 0px 15px;
+  position: absolute;
+  left: 0;
+}
+
+.deleteTarefa {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 12px;
+  gap: 4px;
+  position: absolute;
+  width: 57px;
+  height: 25px;
+  right: 7px;
+  top: 6px;
+  background: #ff3d1f;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .imgUol {
-  margin-left: 1224px;
-  margin-top: 107px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }

@@ -37,7 +37,6 @@ function AuthProvider({ children }) {
       })
       .catch((error) => {
         console.log(error);
-        <Modal />;
       });
   }
 
@@ -48,6 +47,7 @@ function AuthProvider({ children }) {
 
       if (storageUser) {
         setUser(JSON.parse(storageUser));
+        navigate("/planner");
       }
     }
 
